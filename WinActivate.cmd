@@ -9,5 +9,5 @@ EXIT /b 1
 ) ELSE (
 changepk.exe /ProductKey %ProductKey%
 REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\FIRMANAVN\FWEK\ /V ActivationStatus /T REG_DWORD /d "1" /F
-EXIT /b 0
+shutdown -t 5 -r
 )
