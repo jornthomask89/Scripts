@@ -1,14 +1,9 @@
-reg query HKLM\SOFTWARE\Brakar\FWEK /v ActivationStatus
-if %ERRORLEVEL% EQU 0 goto :EXISTS
-
-
-
+@echo off
 REG QUERY HKLM\SOFTWARE\Brakar\FWEK /v ActivationStatus
 
 IF %errorlevel%==0 GOTO INSTALL
 
 :INSTALL
-@echo off
 FOR /F "skip=1" %%A IN ('wmic path SoftwareLicensingService get OA3xOriginalProductKey') DO  (
 SET "ProductKey=%%A"
 goto InstallKey
