@@ -18,6 +18,6 @@ IF [%ProductKey%]==[] (
 EXIT /b 1
 ) ELSE (
 changepk.exe /ProductKey %ProductKey%
-REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\FIRMANAVN\FWEK\ /V ActivationStatus /T REG_DWORD /d "1" /F
+REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Brakar\FWEK\ /V ActivationStatus /T REG_DWORD /d "1" /F
 shutdown -t 30 -r
 )
