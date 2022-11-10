@@ -1,7 +1,7 @@
 @echo off
 
 :START
-REG QUERY HKLM\SOFTWARE\Brakar\Background /v ActivationStatus
+REG QUERY HKLM\SOFTWARE\Brakar\Background /v BrakarBackground
 
 IF %errorlevel%==1 GOTO INSTALL
 IF %errorlevel%==0 GOTO QUERY
