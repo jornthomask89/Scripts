@@ -1,4 +1,4 @@
-﻿$registryPath = "HKLM:\SOFTWARE\Brakar\Background"
+$registryPath = "HKLM:\SOFTWARE\Brakar\Background"
 $Name = "$Env:username"
 $value = "True"
 $img = "C:\ProgramData\CustomScripts\BrakarBackground.png"
