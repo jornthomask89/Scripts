@@ -4,6 +4,7 @@ $value = "True"
 $img = "C:\ProgramData\CustomScripts\BrakarBackground.png"
 $ScriptLoc = "C:\ProgramData\CustomScripts\BackgroundInstall.ps1"
 
+
  # Source URL
 $url = "https://www.brakar.no/wp-content/uploads/2022/11/destop-gronn-skyline.png"
   
@@ -33,46 +34,7 @@ IF(Test-Path $img){
 IF(!(Test-Path $ScriptLoc)){
    Write-Host "File doesnt exist, downloading...." -ForegroundColor Yellow
    # Creates the local scr
-$content = @' 
-#Test and Add Registry Path
-$registryPath = "HKCU:\Control Panel\Brakar\Background"
-$Name = "BrakarBackground"
-$value = "True"
-$WallpaperReg = "HKCU:\Control Panel\Desktop"
-$BGname = "Wallpaper"
-$BGvalue = "C:\ProgramData\CustomScripts\BrakarBackground.png"
-
-
-if (!(Test-Path $registryPath)) 
-{ 
-New-Item -Path $registryPath -ItemType Directory -Force -Confirm:$false 
-} 
-
-
- # Checks the registry
-$regCheck = Get-Item -Path $registryPath
-If($regCheck.GetValue("$Name") -eq $value) {
-  Write-Host "Registry key $registryPath exists with $Name and set to '$value'" -ForegroundColor Green
-  exit
-}
- # Checks the registry
-$regCheck = Get-Item -Path $registryPath
-If($regCheck.GetValue("$Name") -eq $null) {
-  Write-Host "Registry key $registryPath created with $Name and set to '$value'" -ForegroundColor Yellow
-  New-ItemProperty -Path $registryPath -Name $Name -Value $value
-}
-
-Start-Sleep -Seconds 4.5
-RUNDLL32.EXE USER32.DLL, UpdatePerUserSystemParameters 1, True
-'@ 
  
- # create custom folder and write PS script 
-$path = "C:\ProgramData\CustomScripts"
-if (!(Test-Path $path)) 
-{ 
-New-Item -Path $path -ItemType Directory -Force -Confirm:$false 
-}
-Out-File -FilePath "C:\ProgramData\CustomScripts\BackgroundInstall.ps1" -Encoding unicode -Force -InputObject $content -Confirm:$false 
 
    Start-Sleep -Seconds 2
 }
@@ -81,14 +43,20 @@ Out-File -FilePath "C:\ProgramData\CustomScripts\BackgroundInstall.ps1" -Encodin
 
 
 # If the file exists, continue
-IF(Test-Path $img){
-    Write-Host "Background exists. Proceeding." -ForegroundColor Green   
-    }
-
-
-
-
-
+IF(!(Test-Path $img)){
+$url = "https://www.brakar.no/wp-content/uploads/2022/11/destop-gronn-skyline.png"
+$dest = "C:\ProgramData\CustomScripts\BrakarBackground.png"
+   Write-Host "File doesnt exist, downloading...." -ForegroundColor Yellow
+   Invoke-WebRequest -Uri $url -OutFile $dest
+   Start-Sleep -Seconds 2
+}
+IF(!(Test-Path $ScriptLoc)){
+   Write-Host "File doesnt exist, downloading...." -ForegroundColor Yellow
+$url = "https://raw.githubusercontent.com/jornthomask89/Scripts/main/BackgroundInstall.ps1"
+$dest = "C:\ProgramData\CustomScripts\BackgroundInstall.ps1"
+   Invoke-WebRequest -Uri $imgurl -OutFile $dest
+   Start-Sleep -Seconds 2
+}
 
 
      # Checks the registry
